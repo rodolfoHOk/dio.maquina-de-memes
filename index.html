@@ -15,7 +15,7 @@
         <img src="pictures/logo.png" alt="" />
       </div>
 
-      <div class="app-image">
+      <div class="app-image" id="downloadable">
         <textarea 
           name="" 
           class="text-box" 
@@ -23,10 +23,12 @@
           aria-multiline="true" 
         ></textarea>
 
-        <div id="display-image"></div>
+        <div id="display-image">
+          <img id="display-image-bg" src="" alt="hidden" />
+        </div>
 
         <textarea 
-          name="" 
+          name=""
           class="text-box" 
           placeholder="Digite seu meme" 
           aria-multiline="true" 
@@ -34,8 +36,8 @@
       </div>
 
       <div class="app-photo-picker">
-        <select id="meme-list">
-          <option value="">Selecione uma imagem ou adicione abaixo</option>
+        <select id="memes-list" onchange="changeMemePicture(this.value)">
+          <option value="" disabled>Selecione uma imagem ou faça o upload abaixo</option>
         </select> 
 
         <input 
@@ -50,5 +52,21 @@
       </div>
     </div>
   </div>
+
+  <script src="./javascript/script.js"></script>
+  <script src="./javascript/htmlToCanvas.js"></script>
+  <script>
+    document.getElementById("btn-download").onclick = () => {
+      const screenshotPrint = document.querySelector("#downloadable");
+      html2canvas(screenshotPrint).then(canvas => {
+        const base64Image = canvas.toDataURL("image/png");
+        let anchor = document.createElement("a");
+        anchor.setAttribute("href", base64Image);
+        anchor.setAttribute("download", "my-meme.png");
+        anchor.click();
+        anchor.remove();
+      });
+    }
+  </script>
 </body>
 </html>
